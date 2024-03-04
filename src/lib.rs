@@ -3,8 +3,10 @@ use solana_program::{
     entrypoint,
     entrypoint::ProgramResult,
     pubkey::Pubkey,
-    msg,
 };
+mod instruction;
+
+use instruction::{add_movie_review, MovieInstruction};
 
 // declare and export the program's entrypoint
 entrypoint!(process_instruction);
@@ -15,9 +17,13 @@ pub fn process_instruction(
     accounts: &[AccountInfo],
     instruction_data: &[u8]
 ) -> ProgramResult {
-    // log a message to the blockchain
-    msg!("Hello, world!");
+    // unpack the instruction data
+    let instruction = MovieInstruction::unpack(instruction_data)?;
 
-    // gracefully exit the program
-    Ok(())
+    match instruction {
+        MovieInstruction::AddMovieReview { title, rating, description } => {
+            add_movie_review(program_id, accounts, title, rating, description)
+        }
+    }
+
 }
