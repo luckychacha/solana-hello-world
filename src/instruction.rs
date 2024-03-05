@@ -1,13 +1,6 @@
-use borsh::BorshDeserialize;
 use solana_program::{account_info::AccountInfo, entrypoint::ProgramResult, msg, program_error::ProgramError, pubkey::Pubkey};
-
-pub enum MovieInstruction {
-    AddMovieReview {
-        title: String,
-        rating: u8,
-        description: String,
-    },
-}
+use borsh::BorshDeserialize;
+use crate::types::review::MovieReview;
 
 pub fn add_movie_review(
     program_id: &Pubkey,
@@ -21,11 +14,12 @@ pub fn add_movie_review(
     Ok(())
 }
 
-#[derive(BorshDeserialize)]
-struct MovieReview {
-    title: String,
-    rating: u8,
-    description: String,
+pub enum MovieInstruction {
+    AddMovieReview {
+        title: String,
+        rating: u8,
+        description: String,
+    },
 }
 
 impl MovieInstruction {
@@ -49,3 +43,4 @@ impl MovieInstruction {
         })
     }
 }
+

@@ -5,6 +5,7 @@ use solana_program::{
     pubkey::Pubkey,
 };
 mod instruction;
+mod types;
 
 use instruction::{add_movie_review, MovieInstruction};
 
