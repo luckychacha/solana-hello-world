@@ -1,8 +1,5 @@
 use solana_program::{
-    account_info::AccountInfo,
-    entrypoint,
-    entrypoint::ProgramResult,
-    pubkey::Pubkey,
+    account_info::AccountInfo, entrypoint, entrypoint::ProgramResult, pubkey::Pubkey,
 };
 mod instruction;
 mod types;
@@ -16,15 +13,16 @@ entrypoint!(process_instruction);
 pub fn process_instruction(
     program_id: &Pubkey,
     accounts: &[AccountInfo],
-    instruction_data: &[u8]
+    instruction_data: &[u8],
 ) -> ProgramResult {
     // unpack the instruction data
     let instruction = MovieInstruction::unpack(instruction_data)?;
 
     match instruction {
-        MovieInstruction::AddMovieReview { title, rating, description } => {
-            add_movie_review(program_id, accounts, title, rating, description)
-        }
+        MovieInstruction::AddMovieReview {
+            title,
+            rating,
+            description,
+        } => add_movie_review(program_id, accounts, title, rating, description),
     }
-
 }
